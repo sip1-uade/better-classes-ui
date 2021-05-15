@@ -1,5 +1,6 @@
 import { Button, Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,8 @@ const Home = () => {
           Bienvenido al sistema de info sobre clases virtuales
         </Typography>
         <Button
+          component={Link}
+          to="university"
           className={classes.button}
           color="primary"
           variant="contained"
@@ -42,6 +45,8 @@ const Home = () => {
           Entrar como universidad
         </Button>
         <Button
+          component={Link}
+          to="professor"
           className={classes.button}
           color="primary"
           variant="contained"
@@ -49,6 +54,8 @@ const Home = () => {
           Entrar como profesor
         </Button>
         <Button
+          component={Link}
+          to="student"
           className={classes.button}
           color="primary"
           variant="contained"
