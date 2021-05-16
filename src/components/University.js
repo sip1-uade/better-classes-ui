@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import {
   Table,
@@ -9,19 +9,23 @@ import {
   TableRow,
   Button,
 } from "@material-ui/core";
-
-const data = [
-  { id: 1, name: "Curso #1", description: "Primer curso" },
-  { id: 2, name: "Curso #2", description: "Segundo curso" },
-];
+import client from "../client/client";
 
 const University = () => {
-  const renderedRows = data.map((row) => {
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    const search = async () => {
+      const { data } = await client.get("api/courses/");
+      setCourses(data.courses);
+    };
+    search();
+  }, []);
+  const renderedRows = courses.map((course) => {
     return (
-      <TableRow key={row.id}>
-        <TableCell>{row.id}</TableCell>
-        <TableCell>{row.name}</TableCell>
-        <TableCell>{row.description}</TableCell>
+      <TableRow key={course.id}>
+        <TableCell>{course.id}</TableCell>
+        <TableCell>{course.title}</TableCell>
+        <TableCell>{course.description}</TableCell>
       </TableRow>
     );
   });
@@ -38,7 +42,7 @@ const University = () => {
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
-              <TableCell>Nombre</TableCell>
+              <TableCell>Título</TableCell>
               <TableCell>Descripcion</TableCell>
             </TableRow>
           </TableHead>
