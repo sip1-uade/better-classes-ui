@@ -2,7 +2,7 @@ import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/Home";
 import University from "./components/University";
-import Professor from "./components/Professor";
+import Teacher from "./components/Teacher";
 import Student from "./components/Student";
 
 const App = () => {
@@ -11,9 +11,9 @@ const App = () => {
       <Router>
         <div>
           <Route path="/" exact component={Home} />
-          <Route path="/university" exact component={University} />
-          <Route path="/professor" exact component={Professor} />
-          <Route path="/student" exact component={Student} />
+          <Route path="/universities" exact component={University} />
+          <Route path="/teachers" exact component={Teacher} />
+          <Route path="/students" exact component={Student} />
         </div>
       </Router>
     </div>

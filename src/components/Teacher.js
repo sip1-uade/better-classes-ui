@@ -14,8 +14,7 @@ const data = [
   { id: 1, name: "Curso #1", description: "Primer curso" },
   { id: 2, name: "Curso #2", description: "Segundo curso" },
 ];
-
-const University = () => {
+const Teacher = () => {
   const renderedRows = data.map((row) => {
     return (
       <TableRow key={row.id}>
@@ -28,11 +27,8 @@ const University = () => {
   return (
     <div>
       <Typography color="inherit" align="center" variant="h3" marked="center">
-        Gestion Universidades
+        Gestion Profesor
       </Typography>
-      <Button color="primary" variant="contained">
-        Agregar Curso
-      </Button>
       <TableContainer>
         <Table>
           <TableHead>
@@ -49,4 +45,4 @@ const University = () => {
   );
 };
 
-export default University;
+export default Teacher;
