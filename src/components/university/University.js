@@ -9,14 +9,16 @@ import {
   TableRow,
   Button,
 } from "@material-ui/core";
-import client from "../client/client";
+import client from "../../client/client";
+import { Link } from "react-router-dom";
 
 const University = () => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     const search = async () => {
-      const { data } = await client.get("api/courses/");
+      const { data } = await client.get("/courses/");
       setCourses(data.courses);
+      console.log(courses);
     };
     search();
   }, []);
@@ -34,7 +36,12 @@ const University = () => {
       <Typography color="inherit" align="center" variant="h3" marked="center">
         Gestion Universidades
       </Typography>
-      <Button color="primary" variant="contained">
+      <Button
+        component={Link}
+        to="/universities/new-course"
+        color="primary"
+        variant="contained"
+      >
         Agregar Curso
       </Button>
       <TableContainer>
