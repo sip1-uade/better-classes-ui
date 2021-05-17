@@ -18,7 +18,6 @@ const University = () => {
     const search = async () => {
       const { data } = await client.get("/courses/");
       setCourses(data.courses);
-      console.log(courses);
     };
     search();
   }, []);

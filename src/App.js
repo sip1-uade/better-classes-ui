@@ -2,7 +2,7 @@ import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/Home";
 import University from "./components/university/University";
-import Teacher from "./components/Teacher";
+import Teacher from "./components/teacher/Teacher";
 import Student from "./components/Student";
 import CreateCourse from "./components/university/CreateCourse";
 
