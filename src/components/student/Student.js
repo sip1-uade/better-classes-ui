@@ -1,83 +1,53 @@
-import { useState, useEffect } from "react";
-import * as React from "react";
-import { Box, Collapse, IconButton, Typography } from "@material-ui/core";
+import { React, useState, useEffect } from "react";
 import {
+  Modal,
+  Typography,
   Table,
   TableContainer,
   TableHead,
   TableCell,
   TableBody,
   TableRow,
-  Button
+  Button,
+  TextField,
+  makeStyles,
 } from "@material-ui/core";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import client from "../../client/client";
-import { Link } from "react-router-dom";
+import CreateFeedback from "./CreateFeedback";
 
 const Student = () => {
   const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const search = async () => {
-      const { data } = await client.get("/courses");
+      const { data } = await client.get("/courses/");
       setCourses(data.courses);
     };
     search();
   }, []);
-
-  function Row({ course }) {
-    const [openRow, setOpenRow] = useState(false);
+  const openModal = (course) => {
+    setSelectedCourse(course);
+    setShowModal(!showModal);
+  };
+  const renderedRows = courses.map((course) => {
     return (
-      <React.Fragment>
-        <TableRow>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpenRow(!openRow)}
-            >
-              {openRow ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell>{course.id}</TableCell>
-          <TableCell>{course.title}</TableCell>
-          <TableCell>{course.description}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={openRow} timeout="auto" unmountOnExit>
-              <Box margin={1}>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Id</TableCell>
-                      <TableCell>Título</TableCell>
-                      <TableCell>Descripcion</TableCell>
-                      <TableCell>Feedback</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {course.topics.map((topic) => (
-                      <TableRow>
-                        <TableCell>{topic.id}</TableCell>
-                        <TableCell>{topic.title}</TableCell>
-                        <TableCell>{topic.description}</TableCell>
-                        <TableCell>
-                          <Button component={Link} to={`/feedbacks/${course.id}/${topic.id}`} color="default" variant="outlined">
-                                Dar Feedback
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
+      <TableRow key={course.id}>
+        <TableCell>{course.id}</TableCell>
+        <TableCell>{course.title}</TableCell>
+        <TableCell>{course.description}</TableCell>
+        <TableCell>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => openModal(course)}
+          >
+            Dar Feedback
+          </Button>
+        </TableCell>
+      </TableRow>
     );
-  }
+  });
   return (
     <div>
       <Typography color="inherit" align="center" variant="h3" marked="center">
@@ -88,17 +58,17 @@ const Student = () => {
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
-              <TableCell>Nombre</TableCell>
+              <TableCell>Título</TableCell>
               <TableCell>Descripcion</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {courses.map((course) => (
-              <Row key={course.id} course={course} />
-            ))}
-          </TableBody>
+          <TableBody>{renderedRows}</TableBody>
         </Table>
       </TableContainer>
+      <Modal open={showModal} onClose={openModal}>
+        <CreateFeedback course={selectedCourse}/>
+      </Modal>
     </div>
   );
 };

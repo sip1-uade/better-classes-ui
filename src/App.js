@@ -5,7 +5,6 @@ import University from "./components/university/University";
 import Teacher from "./components/teacher/Teacher";
 import Student from "./components/student/Student";
 import CreateCourse from "./components/university/CreateCourse";
-import Feedback from "./components/Feedback/feedback";
 
 const App = () => {
   return (
@@ -21,7 +20,6 @@ const App = () => {
           />
           <Route path="/teachers" exact component={Teacher} />
           <Route path="/students" exact component={Student} />
-          <Route path="/feedbacks/:courseId/:topicId" exact component={Feedback} />
         </div>
       </Router>
     </div>
