@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import * as React from "react";
-import { Box, Collapse, IconButton, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Collapse,
+  IconButton,
+  Modal,
+  Typography,
+} from "@material-ui/core";
 import {
   Table,
   TableContainer,
@@ -12,9 +19,13 @@ import {
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import client from "../../client/client";
+import CreateFeedback from "../student/CreateFeedback";
+import CreateTopic from "./CreateTopic";
 
 const Teacher = () => {
   const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const search = async () => {
       const { data } = await client.get("/courses");
@@ -22,7 +33,10 @@ const Teacher = () => {
     };
     search();
   }, []);
-
+  const openModal = (course) => {
+    setSelectedCourse(course);
+    setShowModal(!showModal);
+  };
   function Row({ course }) {
     const [openRow, setOpenRow] = useState(false);
     return (
@@ -40,6 +54,15 @@ const Teacher = () => {
           <TableCell>{course.id}</TableCell>
           <TableCell>{course.title}</TableCell>
           <TableCell>{course.description}</TableCell>
+          <TableCell>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => openModal(course)}
+            >
+              Crear Tema
+            </Button>
+          </TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -82,6 +105,7 @@ const Teacher = () => {
               <TableCell>Id</TableCell>
               <TableCell>Nombre</TableCell>
               <TableCell>Descripcion</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,6 +115,9 @@ const Teacher = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Modal open={showModal} onClose={openModal}>
+        <CreateTopic course={selectedCourse} />
+      </Modal>
     </div>
   );
 };
