@@ -102,6 +102,7 @@ const Teacher = () => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell></TableCell>
               <TableCell>Id</TableCell>
               <TableCell>Nombre</TableCell>
               <TableCell>Descripcion</TableCell>
