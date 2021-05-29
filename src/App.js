@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, HashRouter as Router } from "react-router-dom";
 import Home from "./components/Home";
 import University from "./components/university/University";
 import Teacher from "./components/teacher/Teacher";
